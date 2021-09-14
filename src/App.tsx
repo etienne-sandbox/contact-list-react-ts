@@ -1,76 +1,45 @@
-import React from 'react';
-import { ContactItem } from './types';
-import Contact from './Contact';
+import React, { useState } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
-const App: React.FC = () => {
-  const [email, setEmail] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [contacts, setContacts] = React.useState<Array<ContactItem>>([
-    {
-      id: '3',
-      name: 'Paul',
-      email: 'paul@gmail.com'
-    },
-    {
-      id: '1',
-      name: 'Alice'
-    },
-    {
-      id: '2',
-      name: 'Bob',
-      email: 'bob@gmail.com'
-    }
-  ]);
-
-  const sortedContact = [...contacts].sort((left, right) => left.name.localeCompare(right.name));
+function App() {
+  const [count, setCount] = useState(0)
 
   return (
-    <div className="app">
-      <h1 className="title">Contacts</h1>
-      <div className="contacts">
-        {sortedContact.map(contact => {
-          return (
-            <Contact
-              contact={contact}
-              key={contact.id}
-              onDelete={() => {
-                setContacts(contacts.filter(item => item.id !== contact.id));
-              }}
-            />
-          );
-        })}
-      </div>
-      <div className="add">
-        <input value={name} onChange={e => setName(e.target.value)} placeholder="name" />
-        <input value={email} onChange={e => setEmail(e.target.value)} placeholder="email" />
-        <button
-          onClick={() => {
-            const newContact: ContactItem = {
-              id: randomShortId(),
-              name: name,
-              email
-            };
-            const contactsCopy = [...contacts];
-            contactsCopy.push(newContact);
-            setContacts(contactsCopy);
-            setName('');
-            setEmail('');
-          }}
-        >
-          Add
-        </button>
-      </div>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>Hello Vite + React!</p>
+        <p>
+          <button type="button" onClick={() => setCount((count) => count + 1)}>
+            count is: {count}
+          </button>
+        </p>
+        <p>
+          Edit <code>App.tsx</code> and save to test HMR updates.
+        </p>
+        <p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+          {' | '}
+          <a
+            className="App-link"
+            href="https://vitejs.dev/guide/features.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vite Docs
+          </a>
+        </p>
+      </header>
     </div>
-  );
-};
-
-/**
- * Return a short (5 chars) string ID
- */
-function randomShortId(): string {
-  return Math.random()
-    .toString(36)
-    .substring(7);
+  )
 }
 
-export default App;
+export default App
